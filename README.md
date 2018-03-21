@@ -5,10 +5,10 @@ Saca trabajos de [empleonuevo.com/baja-california/tijuana/trabajos](empleonuevo.
 
 Luego, usando el geocoder de la api de google maps, convierte la direccion a coordenadas y coloca marcadores en el mapa. En la segunda página se muestra una lista de los trabajos.
 
-##### Dependencias: 
+### Dependencias: 
 
 ```
 ionic cordova plugin add cordova-plugin-geolocation 
-npm install
+npm install --save @ionic-native/geolocation
 ```
 
