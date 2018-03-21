@@ -1,7 +1,6 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
-import { TrabajosDataProvider } from '../../providers/trabajos-data/trabajos-data';
 import { Trabajo } from '../../models/jobs.mapping';
 import { Observable } from 'rxjs/Rx';
 
@@ -11,7 +10,7 @@ import { Observable } from 'rxjs/Rx';
 })
 export class AboutPage {
 
-  jobsjson: string = 'https://feed.grep.sr/json/0329Tw7';
+  jobsjson: string = 'assets/json/jobs.json';
   trabajos: Observable<Trabajo[]>;
 
   constructor(public navCtrl: NavController, private modal:ModalController, private http: HttpClient) {
@@ -22,8 +21,8 @@ export class AboutPage {
     this.trabajos = this.http.get<Trabajo[]>(this.jobsjson)
   }
 
-  openModal(trabajo: Trabajo[]){
-    const trabajoModal = this.modal.create('TrabajoModalPage', {data: trabajo});
+  openModal(data: Trabajo[]){
+    const trabajoModal = this.modal.create('TrabajoModalPage', {data: this.trabajos[1]});
 
     trabajoModal.present();
   }

@@ -19,7 +19,7 @@ export class TrabajoModalPage {
   }
 
   ionViewWillLoad() {
-    const data = this.navParams.get('trabajo');
+    const data = this.navParams.get('data');
     console.log(data);
   }
 

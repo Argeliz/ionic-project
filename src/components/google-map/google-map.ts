@@ -20,7 +20,7 @@ export class GoogleMapComponent {
   infoWindows: any;
   marcadores:Array<any>;
   trabajos: Observable<Trabajo[]>;
-  jobsjson: string = 'https://feed.grep.sr/json/0329Tw7';
+  jobsjson: string = 'assets/json/jobs.json';
 
   constructor(private alertCtrl: AlertController, private geolocation: Geolocation, private http: HttpClient) {
     this.infoWindows = [];
@@ -91,7 +91,7 @@ export class GoogleMapComponent {
   private addMarkerList(){
     // For para iterar por i y mostar datos de acuerdo al i 
     let direccion: string;
-    for(let i = 0; i < 40; i++){
+    for(let i = 0; i < 50; i++){
       this.trabajos.subscribe(res => {
         let j = Math.floor((Math.random() * 100) + 1);
         direccion = res[j].direccion1;

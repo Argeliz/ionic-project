@@ -15,7 +15,6 @@ import { ExpandableHeaderComponent } from '../components/expandable-header/expan
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
-import { TrabajosDataProvider } from '../providers/trabajos-data/trabajos-data';
 
 @NgModule({
   declarations: [
@@ -45,8 +44,7 @@ import { TrabajosDataProvider } from '../providers/trabajos-data/trabajos-data';
     StatusBar,
     SplashScreen,
     Geolocation,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    TrabajosDataProvider
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}

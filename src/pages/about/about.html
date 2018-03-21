@@ -20,8 +20,8 @@
 		descripcion, area, direccion
 	-->
 <ion-content fullscreen #contenido>
-	<ion-list >
-		<button ion-item *ngFor="let trabajo of trabajos | async; let i = index" (click)="openModal(trabajo)">
+	<ion-list ion-item *ngFor="let trabajo of trabajos | async; let i = index">
+		<button (click)="openModal(trabajo)">
 			<ion-row>
 				<ion-col col-4>
 					<img src="{{trabajo.imagen}}">
