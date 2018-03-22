@@ -21,6 +21,7 @@ export class AboutPage {
     this.trabajos = this.http.get<Trabajo[]>(this.jobsjson)
   }
 
+  // This sends the the data to the modal 
   openModal(data: Trabajo[]){
     const trabajoModal = this.modal.create('TrabajoModalPage', {data: data});
 

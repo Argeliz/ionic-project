@@ -10,11 +10,11 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { GoogleMapComponent } from '../components/google-map/google-map';
-import { ExpandableHeaderComponent } from '../components/expandable-header/expandable-header';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Network } from '@ionic-native/network';
 
 @NgModule({
   declarations: [
@@ -23,8 +23,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     ContactPage,
     HomePage,
     TabsPage,
-    GoogleMapComponent,
-    ExpandableHeaderComponent
+    GoogleMapComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +43,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     StatusBar,
     SplashScreen,
     Geolocation,
+    Network,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
