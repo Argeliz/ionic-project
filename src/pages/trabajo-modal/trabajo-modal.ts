@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
+import { Trabajo } from '../../models/jobs.mapping';
+
 
 /**
  * Generated class for the TrabajoModalPage page.
@@ -15,12 +17,15 @@ import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 })
 export class TrabajoModalPage {
 
+  trabajo: Trabajo[];
+
   constructor(public navParams: NavParams, private viewCtrl: ViewController) {
+    this.ionViewWillLoad();
   }
 
   ionViewWillLoad() {
-    const data = this.navParams.get('data');
-    console.log(data);
+    this.trabajo = this.navParams.get('data');
+    console.log(this.trabajo);
   }
 
   closeModal(){

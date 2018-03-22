@@ -22,7 +22,7 @@ export class AboutPage {
   }
 
   openModal(data: Trabajo[]){
-    const trabajoModal = this.modal.create('TrabajoModalPage', {data: this.trabajos[1]});
+    const trabajoModal = this.modal.create('TrabajoModalPage', {data: data});
 
     trabajoModal.present();
   }
