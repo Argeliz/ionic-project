@@ -5,7 +5,7 @@ Saca trabajos de [empleonuevo.com/baja-california/tijuana/trabajos](https://www.
 
 Luego, usando el geocoder de la api de google maps, convierte la direccion a coordenadas y coloca marcadores en el mapa. En la segunda página se muestra una lista de los trabajos.
 
-Puedes descargar el apk de [aquí](https://github.com/Argeliz/ionic-project/releases/download/0.4/TrabajosTijuana0.4.apk).
+Puedes descargar el apk de [aquí](https://github.com/Argeliz/ionic-project/releases/download/1/TrabajosTijuana1.apk).
 
 ### Dependencias:
 
@@ -15,16 +15,8 @@ npm install --save @ionic-native/geolocation
 
 ionic cordova plugin add cordova-plugin-network-information
 npm install --save @ionic-native/network
+
+npm install ngx-filter-pipe --save
 ```
 
 
-
-### Todo:
-
-- Implementar Login
-
-- Añadir Loading, para hacerle saber al usuario que la página está cargando
-
-- ...
-
-  ​

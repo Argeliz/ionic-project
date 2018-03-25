@@ -14,7 +14,7 @@ export class TrabajoModalPage {
   constructor(public navParams: NavParams, private viewCtrl: ViewController) {
     this.ionViewWillLoad();
   }
-
+  
   ionViewWillLoad() {
     this.trabajo = this.navParams.get('data');
     console.log(this.trabajo);

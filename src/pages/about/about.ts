@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { Trabajo } from '../../models/jobs.mapping';
 import { Observable } from 'rxjs/Rx';
+import { LoadingController } from 'ionic-angular';
 
 @Component({
   selector: 'page-about',
@@ -12,9 +13,22 @@ export class AboutPage {
 
   jobsjson: string = 'assets/json/jobs.json';
   trabajos: Observable<Trabajo[]>;
+  filter: any = { puesto: '' };
 
-  constructor(public navCtrl: NavController, private modal:ModalController, private http: HttpClient) {
+  constructor(public navCtrl: NavController, private modal:ModalController, private http: HttpClient, private loadingCtrl:LoadingController) {
     this.getJobs();
+  }
+
+  ionViewWillLoad(){
+    this.presentLoading();    
+  }
+
+  presentLoading() {
+    let loader = this.loadingCtrl.create({
+      content: "Cargando lista de trabajos",
+      duration: 700
+    });
+    loader.present();
   }
 
   getJobs(){
@@ -26,6 +40,6 @@ export class AboutPage {
     const trabajoModal = this.modal.create('TrabajoModalPage', {data: data});
 
     trabajoModal.present();
-  }
+  }         
 
 }

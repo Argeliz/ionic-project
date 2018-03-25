@@ -1,13 +1,13 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
+import { ModalController } from 'ionic-angular';
 import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation';
 import { Network } from '@ionic-native/network';
+import { LoadingController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 
 // Job model
 import { Trabajo } from '../../models/jobs.mapping';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'google-map',
@@ -26,18 +26,25 @@ export class GoogleMapComponent {
   puesto: string;
   numero: number;
 
-  constructor(private modal:ModalController, private geolocation: Geolocation, private http: HttpClient, private network: Network) {
+  constructor(private loadingCtrl:LoadingController, private modal:ModalController, private geolocation: Geolocation, private http: HttpClient, private network: Network) {
     this.infoWindows = [];
     this.trabajos = this.http.get<Trabajo[]>(this.jobsjson);
   }
 
-
   ngOnInit(){
     this.checkNetwork();
+    this.presentLoading();
   	this.getLocation();
   }
 
-  // Only check if there's no wifi connection 
+  presentLoading() {
+    let loader = this.loadingCtrl.create({
+      content: "Cargando mapa y trabajos cercanos",
+      duration: 2000
+    });
+    loader.present();
+  }
+  // Only check if there's no wifi connection once at start - doesn't subscribe
   checkNetwork(){
     if(this.network.type=="none" || this.network.type=="unknown"){
       let informationString = "<h1>No se puede mostrar el mapa. Checa tu conexion a Internet</h1>";
@@ -47,7 +54,6 @@ export class GoogleMapComponent {
 
   // Obtain coordinates
   getLocation(){
-
     this.options = {
       enableHighAccuracy: true
     };
@@ -61,7 +67,7 @@ export class GoogleMapComponent {
     });
   };
 
-// Load map after obtaining the coordinates
+  // Load map after obtaining the coordinates
   loadMap(lat,long){
     let latLng = new google.maps.LatLng(lat, long);
     let mapOptions = {
@@ -73,16 +79,18 @@ export class GoogleMapComponent {
     // Create map 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-    // Create marker for my location
+    // Create marker for the obtained geolocation
     let myLocationMarker = new google.maps.Marker({
       position: latLng,
       title: 'Mi locacion',
+      animation: google.maps.Animation.DROP,
+      icon: 'assets/icons/mylocation.png',
       map: this.map
     });
 
-    // Message displayed
+    // Short title to identify your location
     let myLocationInfo = new google.maps.InfoWindow({
-      content: 'Mi locacion'
+      content: 'Tu locacion'
     });
     this.infoWindows.push(myLocationInfo);
 
@@ -99,12 +107,11 @@ export class GoogleMapComponent {
     // Load marker data and add markers
     this.addMarkerList();
 
-
   }
 
   private addMarkerList(){
-    //Muestra marcadores al azar
-    for(let i = 0; i < 60; i++){
+    // Get random entries, several don't even have address so it won't show many markers anyway
+    for(let i = 0; i < 50; i++){
       this.trabajos.subscribe(res => {
         let j = Math.floor((Math.random() * 100) + 1);
         this.crearMarcadores(res[j])
@@ -112,6 +119,7 @@ export class GoogleMapComponent {
     }
   }
 
+  // Using the geocoder to translate address to coordinates
   crearMarcadores(objetoTrabajo: Trabajo){
     let geocoder = new google.maps.Geocoder();
     geocoder.geocode({'address': objetoTrabajo.direccion1}, (res, status) => {
@@ -121,7 +129,8 @@ export class GoogleMapComponent {
           position: LatLng,
           map: this.map
         });
-        // Add content to the infoWindow - need to compile to angular for click to work
+
+        // Add content to the infoWindow - need to compile to angular for click to work?
         let contentString = '<h5>'+objetoTrabajo.puesto+'</h5>'+
         '<button (click)="openModal('+objetoTrabajo+')">Informacion</button>';
 
@@ -148,11 +157,11 @@ export class GoogleMapComponent {
     });
   }
 
-// // this closes all infoWindows stored so far
-      closeAllInfoWindows() {
-        for(let window of this.infoWindows) {
-          window.close();
-        }
+  // This closes all infoWindows stored so far
+  closeAllInfoWindows() {
+      for(let window of this.infoWindows) {
+        window.close();
+      }
   }
 
   // This code doesn't work yet. How to compile?

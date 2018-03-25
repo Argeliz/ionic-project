@@ -1,14 +1,18 @@
 import { HttpModule } from '@angular/http';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
+import { FIREBASE_CONFiG } from './app.firebase.config';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { FilterPipeModule } from 'ngx-filter-pipe';
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
+import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
+import { HomePage } from '../pages/home/home';
+import { AboutPage } from '../pages/about/about';
+import { ProfilePage } from '../pages/profile/profile';
 import { GoogleMapComponent } from '../components/google-map/google-map';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -19,23 +23,26 @@ import { Network } from '@ionic-native/network';
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
     TabsPage,
+    HomePage,    
+    AboutPage,
+    ProfilePage,
     GoogleMapComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(FIREBASE_CONFiG),
+    AngularFireAuthModule,
+    FilterPipeModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     AboutPage,
-    ContactPage,
+    ProfilePage,
     HomePage,
     TabsPage
   ],

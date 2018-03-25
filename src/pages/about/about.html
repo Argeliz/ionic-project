@@ -1,6 +1,6 @@
 <ion-header>
 	<ion-toolbar>
-		<ion-searchbar></ion-searchbar>
+		<ion-searchbar [(ngModel)]="filter.puesto"></ion-searchbar>
 	</ion-toolbar>
 </ion-header>
 	
@@ -9,7 +9,7 @@
 		descripcion, area, direccion
 	-->
 <ion-content fullscreen #contenido>
-	<ion-list ion-item *ngFor="let trabajo of trabajos | async; let i = index" (click)="openModal(trabajo)">
+	<ion-list ion-item *ngFor="let trabajo of trabajos | async | filterBy: filter; let i = index" (click)="openModal(trabajo)">
 			<ion-row>
 				<ion-col col-3>
 					<img src="{{trabajo.imagen}}">
